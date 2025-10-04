@@ -1,0 +1,72 @@
+ian@debian:~$ python3 eigendemo.py
+Standardized Data:
+[[-1.34164079 -1.34164079 -1.34164079]
+ [-0.4472136  -0.4472136  -0.4472136 ]
+ [ 0.4472136   0.4472136   0.4472136 ]
+ [ 1.34164079  1.34164079  1.34164079]]
+Principal Components (Standardized):
+[[-2.32379001e+00  2.83777291e-16]
+ [-7.74596669e-01 -5.26712619e-17]
+ [ 7.74596669e-01  5.26712619e-17]
+ [ 2.32379001e+00  2.48663116e-16]]
+Min-max Normalized Data:
+[[0.         0.         0.        ]
+ [0.33333333 0.33333333 0.33333333]
+ [0.66666667 0.66666667 0.66666667]
+ [1.         1.         1.        ]]
+Principal Components (Min-max):
+[[-8.66025404e-01  3.07558682e-17]
+ [-2.88675135e-01 -1.56860032e-17]
+ [ 2.88675135e-01  1.13626272e-16]
+ [ 8.66025404e-01 -1.23482235e-17]]
+No Scaling Data:
+[[ 1  2  3]
+ [ 4  5  6]
+ [ 7  8  9]
+ [10 11 12]]
+Principal Components (No Scaling):
+[[-7.79422863  0.        ]
+ [-2.59807621  0.        ]
+ [ 2.59807621  0.        ]
+ [ 7.79422863 -0.        ]]
+ian@debian:~$ cat eigendemo.py
+import numpy as np
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+
+# Generate some sample data with different scales
+np.random.seed(0)
+data = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
+
+# Standardization
+scaler_standard = StandardScaler()
+data_standardized = scaler_standard.fit_transform(data)
+pca_standard = PCA(n_components=2)
+principal_components_standard = pca_standard.fit_transform(data_standardized)
+
+print("Standardized Data:")
+print(data_standardized)
+print("Principal Components (Standardized):")
+print(principal_components_standard)
+
+# Min-max normalization
+scaler_minmax = MinMaxScaler()
+data_minmax = scaler_minmax.fit_transform(data)
+pca_minmax = PCA(n_components=2)
+principal_components_minmax = pca_minmax.fit_transform(data_minmax)
+
+print("Min-max Normalized Data:")
+print(data_minmax)
+print("Principal Components (Min-max):")
+print(principal_components_minmax)
+
+# No Scaling
+pca_no_scaling = PCA(n_components=2)
+principal_components_no_scaling = pca_no_scaling.fit_transform(data)
+
+print("No Scaling Data:")
+print(data)
+print("Principal Components (No Scaling):")
+print(principal_components_no_scaling)
+ian@debian:~$ mkdir test2
+
